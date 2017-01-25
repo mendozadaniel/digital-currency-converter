@@ -32,8 +32,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:textColor="@android:color/background_light"
-        android:textColorHighlight="@android:color/background_light"
+        android:textColor="@color/white"
+        android:textColorHighlight="@color/colorAccent"
         android:textColorHint="@color/colorAccent" />
 
     <EditText
@@ -49,8 +49,10 @@
         android:layout_marginStart="38dp"
         android:layout_marginLeft="38dp"
         android:text="@string/default_interval_val"
-        android:textColorHighlight="@android:color/background_light"
+        android:textColorHighlight="@color/colorAccent"
         android:textColorHint="@color/colorAccent"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        android:textAlignment="center"
+        android:textColorLink="@color/colorAccent" />
 
 </RelativeLayout>

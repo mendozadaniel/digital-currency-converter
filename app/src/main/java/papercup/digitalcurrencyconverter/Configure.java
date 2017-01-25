@@ -6,10 +6,13 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,6 +30,8 @@ public class Configure extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        adjustFontScale(getResources().getConfiguration());
 
         super.onCreate(savedInstanceState);
         // Don't create the widget if the user escapes
@@ -66,5 +71,18 @@ public class Configure extends Activity {
                 finish();
             }
         });
+    }
+
+    public void adjustFontScale(Configuration configuration) {
+        if (configuration.fontScale > 1) {
+//            LogUtil.log(LogUtil.WARN, TAG, "fontScale=" + configuration.fontScale); //Custom Log class, you can use Log.w
+//            LogUtil.log(LogUtil.WARN, TAG, "font too big. scale down..."); //Custom Log class, you can use Log.w
+            configuration.fontScale = (float) 1;
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+            wm.getDefaultDisplay().getMetrics(metrics);
+            metrics.scaledDensity = configuration.fontScale * metrics.density;
+            getBaseContext().getResources().updateConfiguration(configuration, metrics);
+        }
     }
 }

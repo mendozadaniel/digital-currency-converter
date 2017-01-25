@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">Digital Currency Converter</string>
-    <string name="default_high_low_price">$0000.00</string>
     <string name="default_volume">Vol.: N/A</string>
-    <string name="default_updated">Updated @ FRI 12:00 AM</string>
-    <string name="default_price">$####.## USD</string>
+    <string name="default_updated">FRI 12:00 AM</string>
+    <string name="default_price">####.##</string>
     <string name="exchange">OKCoin.cn</string>
     <string name="default_interval_val">30</string>
     <string name="conf_interval_text">Set refresh interval (mins):</string>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:transitionGroup="true"
+    android:elevation="20dp"
+    android:gravity="center"
+    tools:ignore="ExtraText"
+    tools:context="papercup.digitalcurrencyconverter.MainActivity">
+
+    <TextView
+        android:id="@+id/exchangeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxWidth="@dimen/maxWidth"
+        android:text="@string/exchange"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/lastPriceTextView"
+        android:layout_below="@id/exchangeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxWidth="@dimen/maxWidth"
+        android:text="@string/default_price"
+        android:textColor="@color/yellow"
+        android:textSize="15dp"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/lastUpdatedTextView"
+        android:layout_below="@+id/volumeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxWidth="@dimen/maxWidth"
+        android:text="@string/default_updated"
+        android:textColor="@color/limeGreen"
+        android:textSize="11dp"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/volumeTextView"
+        android:layout_below="@+id/lastPriceTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxWidth="@dimen/maxWidth"
+        android:text="@string/default_volume"
+        android:textColor="@color/lightGrey"
+        android:textSize="13dp"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center" />
+
+</RelativeLayout>

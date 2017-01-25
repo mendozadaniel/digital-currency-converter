@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="74dp"
+    android:minWidth="@dimen/maxWidth"
     android:updatePeriodMillis="0"
-    android:minHeight="46dp"
+    android:minHeight="@dimen/maxWidth"
     android:initialLayout="@layout/activity_main"
     android:configure="papercup.digitalcurrencyconverter.Configure">
 </appwidget-provider>

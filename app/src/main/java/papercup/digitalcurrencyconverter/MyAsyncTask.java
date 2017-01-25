@@ -1,13 +1,18 @@
 package papercup.digitalcurrencyconverter;
 
+import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.v4.widget.TextViewCompat;
 import android.util.Log;
+import android.util.TypedValue;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +55,7 @@ public class MyAsyncTask extends AsyncTask <Void, Void, HashMap<String, String>>
         try {
 
             URL url = new URL(webAddress);
+
             HttpsURLConnection https_connection = (HttpsURLConnection) url.openConnection();
 
             try {
@@ -86,8 +92,10 @@ public class MyAsyncTask extends AsyncTask <Void, Void, HashMap<String, String>>
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            Log.e("ERROR", "MalformedURLException: " + e.toString());
         } catch (IOException e) {
             e.printStackTrace();
+            Log.e("ERROR", "IOException: " + e.toString());
         }
 
         return jsonObj;
@@ -109,8 +117,6 @@ public class MyAsyncTask extends AsyncTask <Void, Void, HashMap<String, String>>
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("date", "Mon 12:00 AM");
         hashMap.put("last", "$0000.00");
-        hashMap.put("high", "$0000.00");
-        hashMap.put("low", "$0000.00");
         hashMap.put("volume", "0.0");
 
         double currentConversionRate = 0;
@@ -118,8 +124,6 @@ public class MyAsyncTask extends AsyncTask <Void, Void, HashMap<String, String>>
         try {
             hashMap.put("date", jsonURLObj.get("date").toString());
             hashMap.put("last", jsonURLObj.getJSONObject("ticker").get("last").toString());
-            hashMap.put("high", jsonURLObj.getJSONObject("ticker").get("high").toString());
-            hashMap.put("low", jsonURLObj.getJSONObject("ticker").get("low").toString());
             hashMap.put("volume", jsonURLObj.getJSONObject("ticker").get("vol").toString());
 
             currentConversionRate =
@@ -134,7 +138,7 @@ public class MyAsyncTask extends AsyncTask <Void, Void, HashMap<String, String>>
         hashMap.put("date", formattedDate);
 
         /* Format Volume */
-        DecimalFormat dfVol = new DecimalFormat("###,###,###,##0.0");
+        DecimalFormat dfVol = new DecimalFormat("###,###,###,##0");
 
         String volume = dfVol.format(Double.parseDouble(hashMap.get("volume")));
         hashMap.put("volume", volume);
@@ -144,12 +148,8 @@ public class MyAsyncTask extends AsyncTask <Void, Void, HashMap<String, String>>
         dfDigits.setMaximumFractionDigits(2);
 
         double last_usd = Double.parseDouble(hashMap.get("last")) / currentConversionRate;
-        double high_usd = Double.parseDouble(hashMap.get("high")) / currentConversionRate;
-        double low_usd = Double.parseDouble(hashMap.get("low")) / currentConversionRate;
 
         hashMap.put("last", dfDigits.format(last_usd));
-        hashMap.put("high", dfDigits.format(high_usd));
-        hashMap.put("low", dfDigits.format(low_usd));
 
         return hashMap;
     }
@@ -169,25 +169,17 @@ public class MyAsyncTask extends AsyncTask <Void, Void, HashMap<String, String>>
                                                         R.layout.activity_main);
             if ( result.containsKey("date") ) {
                 remoteViews.setTextViewText(R.id.lastUpdatedTextView,
-                                            "Updated @ " + result.get("date"));
+                                            result.get("date"));
             }
             if ( result.containsKey("last") ) {
                 remoteViews.setTextViewText(R.id.lastPriceTextView,
-                                            "$" + result.get("last") + " USD");
-            }
-            if ( result.containsKey("high") ) {
-                remoteViews.setTextViewText(R.id.highPriceTextView,
-                                            "$" + result.get("high"));
-            }
-            if ( result.containsKey("low") ) {
-                remoteViews.setTextViewText(R.id.lowPriceTextView,
-                                            "$" + result.get("low"));
+                                            "$" + result.get("last"));
             }
             if ( result.containsKey("volume") ) {
+                /* char symbol = '\u0243'; */
                 remoteViews.setTextViewText(R.id.volumeTextView,
-                                            "Vol.: " + result.get("volume"));
+                                            result.get("volume"));
             }
-
             // Refresh widget to show text
             widgetManager.updateAppWidget(widgetIds, remoteViews);
         }
